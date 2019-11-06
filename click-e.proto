@@ -1,0 +1,12 @@
+syntax = "proto3";
+package main;
+
+service ClickE {
+    rpc GetCount(Empty) returns (Count);
+}
+
+message Empty {}
+
+message Count {
+    int32 value = 1;
+}
