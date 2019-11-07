@@ -5,6 +5,7 @@ import (
 	"log"
 	"net"
 	"sync"
+	"time"
 
 	"google.golang.org/grpc"
 )
@@ -32,20 +33,18 @@ func (s *server) GetCount(context.Context, *Empty) (*Count, error) {
 }
 
 func (s *server) Subcribe(_ *Empty, stream ClickE_SubcribeServer) error {
-	s.rw.RLock()
 	c := s.count
-	s.rw.RUnlock()
 	stream.Send(&Count{Value: c})
 	for {
-		s.rw.RLock()
 		n := s.count
-		s.rw.RUnlock()
 		if n <= c {
+			time.Sleep(10 * time.Millisecond)
 			continue
 		}
 
 		if err := stream.Send(&Count{Value: n}); err != nil {
-			return nil
+			log.Println(err)
+			break
 		}
 		c = n
 	}
@@ -58,7 +57,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
-	s := grpc.NewServer()
+	s := grpc.NewServer(grpc.MaxConcurrentStreams(100))
 	RegisterClickEServer(s, &server{})
 	log.Println("starting server...")
 	if err := s.Serve(lis); err != nil {
