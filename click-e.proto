@@ -4,7 +4,7 @@ package main;
 service ClickE {
     rpc Inc(Empty) returns (Count);
     rpc GetCount(Empty) returns (Count);
-    rpc Subcribe(Empty) returns (stream Count);
+    rpc Subscribe(Empty) returns (stream Count);
 }
 
 message Empty {}

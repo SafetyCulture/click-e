@@ -32,7 +32,7 @@ func (s *server) GetCount(context.Context, *Empty) (*Count, error) {
 	return &Count{Value: s.count}, nil
 }
 
-func (s *server) Subcribe(_ *Empty, stream ClickE_SubcribeServer) error {
+func (s *server) Subscribe(_ *Empty, stream ClickE_SubscribeServer) error {
 	c := s.count
 	stream.Send(&Count{Value: c})
 	for {

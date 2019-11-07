@@ -22,7 +22,7 @@ class App extends React.Component {
         /*this._client.getCount(new Empty()).then(res => {
             this.setState(state => ({count: res.getValue()}));
         }).catch(console.error)*/
-        const stream = this._client.subcribe(new Empty())
+        const stream = this._client.subscribe(new Empty())
         stream.on('data', res => {
             this.setState(state => ({count: res.getValue()}));
         })

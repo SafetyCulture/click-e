@@ -241,8 +241,8 @@ proto.main.ClickEPromiseClient.prototype.getCount =
  *   !proto.main.Empty,
  *   !proto.main.Count>}
  */
-const methodDescriptor_ClickE_Subcribe = new grpc.web.MethodDescriptor(
-  '/main.ClickE/Subcribe',
+const methodDescriptor_ClickE_Subscribe = new grpc.web.MethodDescriptor(
+  '/main.ClickE/Subscribe',
   grpc.web.MethodType.SERVER_STREAMING,
   proto.main.Empty,
   proto.main.Count,
@@ -260,7 +260,7 @@ const methodDescriptor_ClickE_Subcribe = new grpc.web.MethodDescriptor(
  *   !proto.main.Empty,
  *   !proto.main.Count>}
  */
-const methodInfo_ClickE_Subcribe = new grpc.web.AbstractClientBase.MethodInfo(
+const methodInfo_ClickE_Subscribe = new grpc.web.AbstractClientBase.MethodInfo(
   proto.main.Count,
   /** @param {!proto.main.Empty} request */
   function(request) {
@@ -277,13 +277,13 @@ const methodInfo_ClickE_Subcribe = new grpc.web.AbstractClientBase.MethodInfo(
  * @return {!grpc.web.ClientReadableStream<!proto.main.Count>}
  *     The XHR Node Readable Stream
  */
-proto.main.ClickEClient.prototype.subcribe =
+proto.main.ClickEClient.prototype.subscribe =
     function(request, metadata) {
   return this.client_.serverStreaming(this.hostname_ +
-      '/main.ClickE/Subcribe',
+      '/main.ClickE/Subscribe',
       request,
       metadata || {},
-      methodDescriptor_ClickE_Subcribe);
+      methodDescriptor_ClickE_Subscribe);
 };
 
 
@@ -294,13 +294,13 @@ proto.main.ClickEClient.prototype.subcribe =
  * @return {!grpc.web.ClientReadableStream<!proto.main.Count>}
  *     The XHR Node Readable Stream
  */
-proto.main.ClickEPromiseClient.prototype.subcribe =
+proto.main.ClickEPromiseClient.prototype.subscribe =
     function(request, metadata) {
   return this.client_.serverStreaming(this.hostname_ +
-      '/main.ClickE/Subcribe',
+      '/main.ClickE/Subscribe',
       request,
       metadata || {},
-      methodDescriptor_ClickE_Subcribe);
+      methodDescriptor_ClickE_Subscribe);
 };
 
 

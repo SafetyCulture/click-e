@@ -102,16 +102,16 @@ func init() {
 func init() { proto.RegisterFile("click-e.proto", fileDescriptor_87a337b6f4578009) }
 
 var fileDescriptor_87a337b6f4578009 = []byte{
-	// 139 bytes of a gzipped FileDescriptorProto
+	// 140 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x4d, 0xce, 0xc9, 0x4c,
 	0xce, 0xd6, 0x4d, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0xc9, 0x4d, 0xcc, 0xcc, 0x53,
 	0x62, 0xe7, 0x62, 0x75, 0xcd, 0x2d, 0x28, 0xa9, 0x54, 0x92, 0xe5, 0x62, 0x75, 0xce, 0x2f, 0xcd,
 	0x2b, 0x11, 0x12, 0xe1, 0x62, 0x2d, 0x4b, 0xcc, 0x29, 0x4d, 0x95, 0x60, 0x54, 0x60, 0xd4, 0x60,
-	0x0d, 0x82, 0x70, 0x8c, 0xca, 0xb9, 0xd8, 0x9c, 0x41, 0xda, 0x5d, 0x85, 0xe4, 0xb9, 0x98, 0x3d,
+	0x0d, 0x82, 0x70, 0x8c, 0x2a, 0xb8, 0xd8, 0x9c, 0x41, 0xda, 0x5d, 0x85, 0xe4, 0xb9, 0x98, 0x3d,
 	0xf3, 0x92, 0x85, 0xb8, 0xf5, 0x40, 0xfa, 0xf5, 0xc0, 0x9a, 0xa5, 0xa0, 0x1c, 0x88, 0x01, 0x2a,
-	0x5c, 0x1c, 0xee, 0xa9, 0x25, 0x10, 0x36, 0x6e, 0x55, 0x6a, 0x5c, 0x1c, 0xc1, 0xa5, 0x49, 0xc9,
-	0x45, 0x99, 0x49, 0xa9, 0xb8, 0x55, 0x19, 0x30, 0x26, 0xb1, 0x81, 0x5d, 0x6b, 0x0c, 0x08, 0x00,
-	0x00, 0xff, 0xff, 0x4b, 0x37, 0x7b, 0xd1, 0xbe, 0x00, 0x00, 0x00,
+	0x5c, 0x1c, 0xee, 0xa9, 0x25, 0x10, 0x36, 0x6e, 0x55, 0xea, 0x5c, 0x9c, 0xc1, 0xa5, 0x49, 0xc5,
+	0xc9, 0x45, 0x99, 0x49, 0xa9, 0xb8, 0x95, 0x19, 0x30, 0x26, 0xb1, 0x81, 0x9d, 0x6b, 0x0c, 0x08,
+	0x00, 0x00, 0xff, 0xff, 0x1d, 0xc9, 0xc3, 0x7f, 0xbf, 0x00, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -128,7 +128,7 @@ const _ = grpc.SupportPackageIsVersion4
 type ClickEClient interface {
 	Inc(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Count, error)
 	GetCount(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Count, error)
-	Subcribe(ctx context.Context, in *Empty, opts ...grpc.CallOption) (ClickE_SubcribeClient, error)
+	Subscribe(ctx context.Context, in *Empty, opts ...grpc.CallOption) (ClickE_SubscribeClient, error)
 }
 
 type clickEClient struct {
@@ -157,12 +157,12 @@ func (c *clickEClient) GetCount(ctx context.Context, in *Empty, opts ...grpc.Cal
 	return out, nil
 }
 
-func (c *clickEClient) Subcribe(ctx context.Context, in *Empty, opts ...grpc.CallOption) (ClickE_SubcribeClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_ClickE_serviceDesc.Streams[0], "/main.ClickE/Subcribe", opts...)
+func (c *clickEClient) Subscribe(ctx context.Context, in *Empty, opts ...grpc.CallOption) (ClickE_SubscribeClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_ClickE_serviceDesc.Streams[0], "/main.ClickE/Subscribe", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &clickESubcribeClient{stream}
+	x := &clickESubscribeClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -172,16 +172,16 @@ func (c *clickEClient) Subcribe(ctx context.Context, in *Empty, opts ...grpc.Cal
 	return x, nil
 }
 
-type ClickE_SubcribeClient interface {
+type ClickE_SubscribeClient interface {
 	Recv() (*Count, error)
 	grpc.ClientStream
 }
 
-type clickESubcribeClient struct {
+type clickESubscribeClient struct {
 	grpc.ClientStream
 }
 
-func (x *clickESubcribeClient) Recv() (*Count, error) {
+func (x *clickESubscribeClient) Recv() (*Count, error) {
 	m := new(Count)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -193,7 +193,7 @@ func (x *clickESubcribeClient) Recv() (*Count, error) {
 type ClickEServer interface {
 	Inc(context.Context, *Empty) (*Count, error)
 	GetCount(context.Context, *Empty) (*Count, error)
-	Subcribe(*Empty, ClickE_SubcribeServer) error
+	Subscribe(*Empty, ClickE_SubscribeServer) error
 }
 
 // UnimplementedClickEServer can be embedded to have forward compatible implementations.
@@ -206,8 +206,8 @@ func (*UnimplementedClickEServer) Inc(ctx context.Context, req *Empty) (*Count, 
 func (*UnimplementedClickEServer) GetCount(ctx context.Context, req *Empty) (*Count, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCount not implemented")
 }
-func (*UnimplementedClickEServer) Subcribe(req *Empty, srv ClickE_SubcribeServer) error {
-	return status.Errorf(codes.Unimplemented, "method Subcribe not implemented")
+func (*UnimplementedClickEServer) Subscribe(req *Empty, srv ClickE_SubscribeServer) error {
+	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
 }
 
 func RegisterClickEServer(s *grpc.Server, srv ClickEServer) {
@@ -250,24 +250,24 @@ func _ClickE_GetCount_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ClickE_Subcribe_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _ClickE_Subscribe_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(Empty)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(ClickEServer).Subcribe(m, &clickESubcribeServer{stream})
+	return srv.(ClickEServer).Subscribe(m, &clickESubscribeServer{stream})
 }
 
-type ClickE_SubcribeServer interface {
+type ClickE_SubscribeServer interface {
 	Send(*Count) error
 	grpc.ServerStream
 }
 
-type clickESubcribeServer struct {
+type clickESubscribeServer struct {
 	grpc.ServerStream
 }
 
-func (x *clickESubcribeServer) Send(m *Count) error {
+func (x *clickESubscribeServer) Send(m *Count) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -286,8 +286,8 @@ var _ClickE_serviceDesc = grpc.ServiceDesc{
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "Subcribe",
-			Handler:       _ClickE_Subcribe_Handler,
+			StreamName:    "Subscribe",
+			Handler:       _ClickE_Subscribe_Handler,
 			ServerStreams: true,
 		},
 	},
