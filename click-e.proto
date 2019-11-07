@@ -2,7 +2,9 @@ syntax = "proto3";
 package main;
 
 service ClickE {
+    rpc Inc(Empty) returns (Count);
     rpc GetCount(Empty) returns (Count);
+    rpc Subcribe(Empty) returns (stream Count);
 }
 
 message Empty {}

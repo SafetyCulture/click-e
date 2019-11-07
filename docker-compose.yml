@@ -1,0 +1,13 @@
+version: '3'
+services:
+    
+  server:
+    image: clicke/server
+    depends_on:
+      - envoy
+
+
+  envoy:
+    image: clicke/envoy
+    ports:
+      - "8080:8080"
