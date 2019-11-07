@@ -1,8 +1,12 @@
+/* eslint-disable */
+
 import React from 'react';
 import './App.css';
 
 import { ClickEPromiseClient } from './click-e_grpc_web_pb.js';
 import { Empty } from './click-e_pb.js';
+
+const enableDevTools = window.__GRPCWEB_DEVTOOLS__ || (() => { });
 
 class App extends React.Component {
     
@@ -12,6 +16,9 @@ class App extends React.Component {
         super(props)
         
         this._client = new ClickEPromiseClient('http://localhost:8080')
+        
+        enableDevTools([this._client])
+
         /*this._client.getCount(new Empty()).then(res => {
             this.setState(state => ({count: res.getValue()}));
         }).catch(console.error)*/
