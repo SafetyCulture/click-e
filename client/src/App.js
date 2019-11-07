@@ -12,9 +12,13 @@ class App extends React.Component {
         super(props)
         
         this._client = new ClickEPromiseClient('http://localhost:8080')
-        this._client.getCount(new Empty()).then(res => {
+        /*this._client.getCount(new Empty()).then(res => {
             this.setState(state => ({count: res.getValue()}));
-        }).catch(console.error)
+        }).catch(console.error)*/
+        const stream = this._client.subcribe(new Empty())
+        stream.on('data', res => {
+            this.setState(state => ({count: res.getValue()}));
+        })
         this.state = { count: 0 }
 
     }
@@ -37,7 +41,7 @@ class App extends React.Component {
     inc = () => {
         this._client.inc(new Empty()).then(res => {
             this.setState(state => ({count: res.getValue()}));
-        });
+        }).catch(console.log)
     }
 }
 

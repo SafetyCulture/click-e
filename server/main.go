@@ -34,7 +34,7 @@ func (s *server) GetCount(context.Context, *Empty) (*Count, error) {
 func (s *server) Subcribe(_ *Empty, stream ClickE_SubcribeServer) error {
 	s.rw.RLock()
 	c := s.count
-	s.rw.Unlock()
+	s.rw.RUnlock()
 	stream.Send(&Count{Value: c})
 	for {
 		s.rw.RLock()
